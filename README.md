@@ -18,6 +18,13 @@
 
 ### *<a name = "1"> Ответ к Заданию 1</a>*
 
+```sql
+SELECT DISTINCT district 
+FROM address 
+WHERE district LIKE 'K%a' AND district NOT LIKE '% %' ;
+```
+
+![district](img/Screenshot_2023-03-09_22-10-47.png)
 
 ---
 
@@ -27,6 +34,13 @@
 
 ### *<a name = "2"> Ответ к Заданию 2</a>*
 
+```sql
+SELECT * FROM payment 
+WHERE payment_date BETWEEN '2005-06-15' AND '2005-06-19'
+AND amount > 10;
+```
+
+![payment](img/Screenshot_2023-03-09_22-29-06.png)
 
 ---
 
@@ -36,7 +50,17 @@
 
 
 ### *<a name = "3"> Ответ к Заданию 3</a>*
+Получены в исходном порядке
 
+```sql
+SELECT * FROM
+(SELECT * FROM rental
+ORDER BY rental_date DESC
+LIMIT 5) t
+ORDER BY rental_id;
+```
+
+![rental](img/Screenshot_2023-03-09_22-48-54.png)
 
 ---
 
@@ -51,6 +75,14 @@
 
 ### *<a name = "4"> Ответ к Заданию 41</a>*
 
+```sql
+SELECT REPLACE(lower_first_name, 'll', 'pp') new_first_name, new_last_name FROM
+(SELECT LOWER(first_name) lower_first_name, LOWER(last_name) new_last_name FROM customer 
+WHERE active NOT LIKE '0' 
+AND first_name LIKE 'Kelly' OR first_name LIKE 'Willie') t;
+```
+
+![customer](img/Screenshot_2023-03-09_23-12-58.png)
 
 ---
 
@@ -63,8 +95,12 @@
 
 
 ### *<a name = "5"> Ответ к Заданию 5*</a>*
-
-
+```sql
+SELECT SUBSTRING_INDEX(email, '@', 1) as 1column, 
+RIGHT (email, (CHAR_LENGTH(email) - CHAR_LENGTH(SUBSTRING_INDEX(email, '@', 1)) - 1)) as 2column
+FROM customer;
+```
+![email](img/Screenshot_2023-03-10_00-08-40.png)
 ---
 
 ### Задание 6*
@@ -73,3 +109,14 @@
 
 ### *<a name = "6"> Ответ к Заданию 6*</a>*
 
+```sql
+SELECT 
+CONCAT(UPPER(LEFT (1column, 1)), LOWER(RIGHT(1column, (CHAR_LENGTH(1column)-1)))) as one_column, 
+CONCAT(UPPER(LEFT (2column, 1)), LOWER(RIGHT(2column, (CHAR_LENGTH(2column)-1)))) as two_column
+FROM
+(SELECT SUBSTRING_INDEX(email, '@', 1) as 1column, 
+RIGHT (email, (CHAR_LENGTH(email) - CHAR_LENGTH(SUBSTRING_INDEX(email, '@', 1)) - 1)) as 2column 
+FROM customer) t;
+```
+
+![LOWER](img/Screenshot_2023-03-10_00-29-10.png)
