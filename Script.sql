@@ -8,15 +8,14 @@ WHERE district LIKE 'K%a' AND district NOT LIKE '% %' ;
 #которые выполнялись в промежуток с 15 июня 2005 года по 18 июня 2005 года включительно 
 #и стоимость которых превышает 10.00.
 SELECT * FROM payment 
-WHERE payment_date BETWEEN '2005-06-15' AND '2005-06-19'
+WHERE payment_date >= '2005-06-15' AND payment_date < '2005-06-19'
 AND amount > 10;
 
+
 #Получите последние пять аренд фильмов (в исходном порядке).
-SELECT * FROM
-(SELECT * FROM rental
+SELECT * FROM rental
 ORDER BY rental_date DESC
-LIMIT 5) t
-ORDER BY rental_id;
+LIMIT 5;
 
 #Одним запросом получите активных покупателей, имена которых Kelly или Willie. 
 #Сформируйте вывод в результат таким образом:
